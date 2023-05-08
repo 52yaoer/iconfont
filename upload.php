@@ -1,4 +1,5 @@
 <?
+error_reporting(0);//去掉警告提示
 header('content-type:application/json');
 $res = ['code' => 0, 'msg' => '开始上传'];
 $temp = explode(".", $_FILES["file"]["name"]);
@@ -16,8 +17,12 @@ if ((($_FILES["file"]["type"] == "image/svg+xml")) && ($_FILES["file"]["size"] <
         } else {
             // 如果 upload 目录不存在该文件则将文件上传到 upload 目录下
             move_uploaded_file($_FILES["file"]["tmp_name"], $dir . $_FILES["file"]["name"]);
-
-            $res = ['code' => 200, 'msg' => "上传成功"];
+            
+            if (file_exists($dir . $_FILES["file"]["name"])) {
+                $res = ['code' => 200, 'msg' => "上传成功"];
+            }else{
+                $res = ['code' => 0, 'msg' => $_FILES["file"]["name"] . " 文件上传失败。 "];
+            }
         }
     }
 } else {

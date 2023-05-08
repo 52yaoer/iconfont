@@ -1,6 +1,7 @@
 <?php
 
-if (!$_GET['name']) {
+//if (!$_GET['name']) {
+if (!isset($_GET["name"])) {
 ?>
 
     <title>a-icon 图标服务</title>
